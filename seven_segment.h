@@ -8,30 +8,33 @@
  * 
  */
 
- #include "seven_segment_defs.h"
+#include "seven_segment_defs.h"
 
- #ifndef SEVEN_SEG_H
- #define SEVEN_SEG_H
-
- static sevenSegment_period_ms_t ss_period;
+#ifndef SEVEN_SEG_H
+#define SEVEN_SEG_H
 
 /**
- * @brief 
+ * @brief Initializes statemachine and pins for a Seven Second Delay.
+ * 
+ * @param pinsIn    Struct containing pin numbers and the number of digits.
+ * @param digits    Array of common pins, if already added in pinsIn then use NULL.
  * 
  */
- void seven_segment_init();
+void sseg_init(sseg_pins_t pinsIn, sseg_pins_t *digits);
 
 /**
- * @brief 
+ * @brief Waits for SEVEN_SEGMENT_STROBE_PERIOD_MS and then switches digits.
  * 
+ * @warning If intended to use with other code, add as interrupt call back on a timer. Must be initialized by user.
  */
- void seven_segment_tick();
+void sseg_tick();
 
 /**
- * @brief 
+ * @brief Set the value of any given digit.
  * 
- * @param val 
+ * @param digit Digit value 0-7.
+ * @param val Value to be written 0x0-0xf, 0x10 for blank.
  */
- void seven_segment_setDigit(uint8_t val);
+void sseg_setDigit(uint8_t digit, sseg_val_t val);
 
- #endif     /* SEVEN_SEG_H */
+#endif     /* SEVEN_SEG_H */
