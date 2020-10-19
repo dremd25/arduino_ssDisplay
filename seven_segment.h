@@ -13,17 +13,21 @@
 #ifndef SEVEN_SEG_H
 #define SEVEN_SEG_H
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 /**
  * @brief Initializes statemachine and pins for a Seven Second Delay.
  * 
- * @param pinsIn    Struct containing pin numbers and the number of digits.
- * @param digits    Array of common pins, if already added in pinsIn then use NULL.
+ * @param pinsIn    Array containing the pin maping, first the seven segment pins then the commong pins.
+ * @param numDigits Number of digits controlled by driver, if 0 is entered, assumed that there is only one digit.
  * 
  */
-void sseg_init(sseg_pins_t pinsIn, sseg_pins_t *digits);
+void sseg_init(sseg_pin_t *pinsIn, sseg_len_t numDigits);
 
 /**
- * @brief Waits for SEVEN_SEGMENT_STROBE_PERIOD_MS and then switches digits.
+ * @brief Waits for SSEG_STROBE and then switches digits.
  * 
  * @warning If intended to use with other code, add as interrupt call back on a timer. Must be initialized by user.
  */
@@ -37,4 +41,7 @@ void sseg_tick();
  */
 void sseg_setDigit(uint8_t digit, sseg_val_t val);
 
+#ifdef __cplusplus
+}
+#endif
 #endif     /* SEVEN_SEG_H */
